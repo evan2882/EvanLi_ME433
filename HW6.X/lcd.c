@@ -40,7 +40,7 @@
 
 #define fc ILI9341_WHITE
 #define bkc ILI9341_BLACK
-#define bc ILI9341_RED 
+#define bc ILI9341_RED
 
 
 
@@ -79,7 +79,7 @@ void LCD_print_bar(int x, int y){
         LCD_drawPixel(x,y+i,fc);
         LCD_drawPixel(x+100,y+i,fc);
     }
-    
+
 }
 
 void LCD_bar_progress(int x, int y, int i){
@@ -88,23 +88,23 @@ void LCD_bar_progress(int x, int y, int i){
     int s;
     for(j=1; j<i;j++){
         LCD_drawPixel(x+j,y+2,bc); //horizontal
-        
+
         for (z=1; z<10;z++){
-            LCD_drawPixel(x+j,y+z,bc);  //vertical 
-            
+            LCD_drawPixel(x+j,y+z,bc);  //vertical
+
         }
     }
     for(s=i+1;s<100; s++ ){
         LCD_drawPixel(x+s,y+2,bkc);
         for (z=1; z<10;z++){
-            LCD_drawPixel(x+s,y+z,bkc);  //vertical       
+            LCD_drawPixel(x+s,y+z,bkc);  //vertical
         }
     }
 }
 
 
 int main() {
-    
+
     __builtin_disable_interrupts();
 
     // set the CP0 CONFIG register to indicate that kseg0 is cacheable (0x3)
@@ -120,37 +120,34 @@ int main() {
     DDPCONbits.JTAGEN = 0;
     SPI1_init() ;
     LCD_init();
-    
+
     LCD_clearScreen(ILI9341_BLACK);
-   
+
     __builtin_enable_interrupts();
     int d=0;
     char m[100];
     float fps;
-    
+
     char n[20];
     LCD_print_bar(30, 50);
-    
-    
+
+
     while (1){
         while(_CP0_GET_COUNT()<2400000){;}
         _CP0_SET_COUNT(0);
-        
+
         sprintf(m, "Hello World! %d",d);
         d++;
         LCD_print_string(m, 28, 32);
         LCD_bar_progress(30,50,d);
-        
-        fps=1/(_CP0_GET_COUNT()*25/(1000000000.0));
+
+        fps=1/(_CP0_GET_COUNT()*42/(1000000000.0));
         sprintf(n, "FPS: %f",fps);
         LCD_print_string(n, 30,70 );
         if(d>=100){
         d=0;
         }
-        
-        
+
+
     }
 }
-
-
-
