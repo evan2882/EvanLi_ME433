@@ -118,6 +118,8 @@ int main() {
 
     // disable JTAG to get pins back
     DDPCONbits.JTAGEN = 0;
+    TRISAbits.TRISA4=0;
+    LATAbits.LATA4=0;
     SPI1_init() ;
     LCD_init();
 
@@ -135,7 +137,7 @@ int main() {
     while (1){
         while(_CP0_GET_COUNT()<2400000){;}
         _CP0_SET_COUNT(0);
-
+        LATAbits.LATA4 = !LATAbits.LATA4;
         sprintf(m, "Hello World! %d",d);
         d++;
         LCD_print_string(m, 28, 32);
