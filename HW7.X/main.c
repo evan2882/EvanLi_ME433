@@ -164,8 +164,8 @@ int main() {
     char d;
     char m[100];
     char n[20];
-    char Data8[100];
-    char Data16[100];
+    unsigned char Data8[14];
+    short Data16[7];
     
     
     LATAbits.LATA4=1 ;  
@@ -174,23 +174,25 @@ int main() {
     LATAbits.LATA4=0 ;  
     int i;
     while(1){
-        while(_CP0_GET_COUNT()<10000000){;}//1200000
+        while(_CP0_GET_COUNT()<1200000){;}  //20hz
       
         _CP0_SET_COUNT(0);
         LATAbits.LATA4 = !LATAbits.LATA4;
 
         I2C_read_multiple(accad, 0x20, Data8, 14);
         for(i=0; i<7; i++){
-            Data16[i]= ( Data8[2*i] | (Data8[2*i+1] << 8) );  //combine 8 bits data into 16 bits
+            Data16[i]= ( (Data8[2*i+1] << 8) | Data8[2*i]);  //combine 8 bits data into 16 bits
         }
         short x_bar, y_bar;
-        x_bar=Data16[4]/5;
-        y_bar=Data16[5]/5;
-                
-        sprintf(m, "x:%d", Data16[4]);
+        x_bar=-Data16[4]/50;
+        y_bar=-Data16[5]/50;
+        
+        sprintf(m, "ID: %d", d);
+        LCD_print_string(m, 28, 22);
+        sprintf(m, "x:%d", x_bar);
         LCD_print_string(m, 28, 32);
-        sprintf(m, "y:%d",Data16[5]);
-        LCD_print_string(m, 28, 40);
+        sprintf(m, "y:%d",y_bar);
+        LCD_print_string(m, 28, 42);
         LCD_xbar_progress(x_bar);
         LCD_ybar_progress(y_bar);
       

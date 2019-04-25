@@ -12,5 +12,4 @@ void LCD_bar_progress(int x, int y, int i);
 void LCD_xbar_progress(short k);
 void LCD_ybar_progress(short k);
 
-
 #endif

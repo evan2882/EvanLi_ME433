@@ -57,21 +57,21 @@ int main() {
     TRISAbits.TRISA4=0;
     TRISBbits.TRISB4=1;
     LATAbits.LATA4=1;
-    _CP0_SET_COUNT(0);
+    
     __builtin_enable_interrupts();
 
     while(1) {
 	// use _CP0_SET_COUNT(0) and _CP0_GET_COUNT() to test the PIC timing
-        
+
         while (PORTBbits.RB4==0){;
          }
         if (_CP0_GET_COUNT()>=24003){
         LATAbits.LATA4=!LATAbits.LATA4;
         _CP0_SET_COUNT(0);}
-        
-       
-        
-        
-	
+
+
+
+
+
     }
 }
