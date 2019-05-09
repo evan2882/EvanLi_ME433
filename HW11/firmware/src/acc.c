@@ -90,17 +90,4 @@ void I2C_read_multiple(unsigned char register1, unsigned char * data, int length
 
 }
 
-void movingAvg(short *ptrArrNumbers, int nextNum)
-{
-  //Subtract the oldest number from the prev sum, add the new number
-  
-  ptrArrNumbers[0]=ptrArrNumbers[1];
-  ptrArrNumbers[1]=ptrArrNumbers[2];
-  ptrArrNumbers[2]=ptrArrNumbers[3];
-  ptrArrNumbers[3]=ptrArrNumbers[4];
-  ptrArrNumbers[4]=nextNum;
-  
-
-  
-}
 
